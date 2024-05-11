@@ -1,11 +1,14 @@
 package com.example.notespro;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -27,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     Button loginButton;
     ProgressBar progressBar;
     TextView registerTextView;
+    ImageView loginIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +48,21 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login_button);
         progressBar = findViewById(R.id.progress_bar);
         registerTextView = findViewById(R.id.register_text_view_button);
+        loginIcon = findViewById(R.id.login_icon);
 
         loginButton.setOnClickListener((v)-> loginUser());
-        registerTextView.setOnClickListener((v)->startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
+        registerTextView.setOnClickListener((v)-> {
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            finish();
+        });
+
+        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(loginIcon, "alpha", 0.2f, 1f);
+        ObjectAnimator translateY = ObjectAnimator.ofFloat(loginIcon, "translationY", 250f, 0f);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(fadeIn, translateY);
+        animatorSet.setDuration(1500);
+        animatorSet.start();
 
     }
 

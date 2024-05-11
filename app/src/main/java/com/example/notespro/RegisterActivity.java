@@ -1,10 +1,14 @@
 package com.example.notespro;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button registerButton;
     ProgressBar progressBar;
     TextView loginTextView;
+    ImageView registerIcon;
 
 
     @Override
@@ -46,9 +51,21 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.create_account_button);
         progressBar = findViewById(R.id.progress_bar);
         loginTextView = findViewById(R.id.login_text_view_button);
+        registerIcon = findViewById(R.id.register_icon);
 
         registerButton.setOnClickListener( v -> register());
-        loginTextView.setOnClickListener( v -> finish());
+        loginTextView.setOnClickListener( v -> {
+            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            finish();
+        });
+
+        ObjectAnimator translateX = ObjectAnimator.ofFloat(registerIcon, "translationX", 250f, 0f);
+        ObjectAnimator rotate = ObjectAnimator.ofFloat(registerIcon, "rotation", 0f, 3600f);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(translateX, rotate);
+        animatorSet.setDuration(1500);
+        animatorSet.start();
 
     }
 
