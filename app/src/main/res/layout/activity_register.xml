@@ -26,18 +26,20 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hello."
-            android:textStyle="bold"
+            android:gravity="center"
+            android:text="Notes Pro"
+            android:textColor="@color/black"
             android:textSize="32sp"
-            android:textColor="@color/black"/>
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Let's get started"
-            android:textStyle="bold"
+            android:gravity="center"
+            android:text="Register"
+            android:textColor="@color/black"
             android:textSize="36sp"
-            android:textColor="@color/black"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -113,12 +115,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Already have an account? "/>
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:id="@+id/login_text_view_button"
-                android:text="Login"/>
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Login"
+                android:textStyle="bold" />
 
         </LinearLayout>
         
