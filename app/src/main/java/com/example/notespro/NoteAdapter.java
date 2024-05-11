@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,9 +25,13 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note, NoteAdapter.Note
 
     @Override
     protected void onBindViewHolder(@NonNull NoteViewHolder noteViewHolder, int i, @NonNull Note note) {
+        Animation animation = AnimationUtils.loadAnimation(noteViewHolder.itemView.getContext(), android.R.anim.slide_in_left);
+
         noteViewHolder.titleTextView.setText(note.title);
         noteViewHolder.contentTextView.setText(note.content);
         noteViewHolder.timestampTextView.setText(Utility.timestampToString(note.timestamp));
+
+        noteViewHolder.itemView.startAnimation(animation);
 
         noteViewHolder.itemView.setOnClickListener((v)->{
             Intent intent = new Intent(context,NoteDetailsActivity.class);
