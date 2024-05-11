@@ -1,6 +1,7 @@
 package com.example.notespro;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
     TextView pageTitleTextView;
     String title,content,docId;
     boolean isEditMode = false;
+    TextView deleteNoteTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,8 @@ public class NoteDetailsActivity extends AppCompatActivity {
         titleEditText = findViewById(R.id.notes_title_text);
         contentEditText = findViewById(R.id.notes_content_text);
         saveNoteButton = findViewById(R.id.save_note_button);
-
         pageTitleTextView = findViewById(R.id.page_title);
+        deleteNoteTextView = findViewById(R.id.delete_note_text_view_button);
 
         title = getIntent().getStringExtra("title");
         content = getIntent().getStringExtra("content");
@@ -54,11 +56,12 @@ public class NoteDetailsActivity extends AppCompatActivity {
         contentEditText.setText(content);
         if(isEditMode){
             pageTitleTextView.setText("Edit your note");
+            deleteNoteTextView.setVisibility(View.VISIBLE);
         }
 
-
-
         saveNoteButton.setOnClickListener((v)-> saveNote());
+
+        deleteNoteTextView.setOnClickListener((v)-> deleteNote());
 
     }
 
@@ -94,6 +97,22 @@ public class NoteDetailsActivity extends AppCompatActivity {
                     finish();
                 }else{
                     Utility.showToast(NoteDetailsActivity.this, "Failed while adding note");
+                }
+            }
+        });
+    }
+
+    void deleteNote(){
+        DocumentReference documentReference;
+        documentReference = Utility.getCollectionReferenceForNores().document(docId);
+        documentReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Utility.showToast(NoteDetailsActivity.this, "Note deleted successfully");
+                    finish();
+                }else{
+                    Utility.showToast(NoteDetailsActivity.this, "Failed while deleting note");
                 }
             }
         });
